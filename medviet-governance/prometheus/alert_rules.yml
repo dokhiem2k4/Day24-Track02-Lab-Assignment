@@ -1,0 +1,42 @@
+groups:
+  - name: medviet_security
+    rules:
+      # Alert khi có > 10 lần 403 từ cùng 1 IP trong 5 phút (brute force)
+      - alert: SuspiciousAccessAttempts
+        expr: sum(rate(http_requests_total{status="403"}[5m])) by (client_ip) > 10
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Suspicious access pattern from {{ $labels.client_ip }}"
+          description: "More than 10 forbidden requests/min from same IP — possible credential stuffing"
+
+      # Alert khi bulk export > 1000 records trong 10 phút (data exfiltration)
+      - alert: BulkDataExport
+        expr: sum(increase(api_records_returned_total[10m])) > 1000
+        for: 0m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Potential data exfiltration detected"
+          description: "Over 1000 patient records returned in 10 minutes — review immediately"
+
+      # Alert khi có nhiều lần 401 liên tiếp (invalid token)
+      - alert: MultipleAuthFailures
+        expr: sum(rate(http_requests_total{status="401"}[5m])) > 5
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Multiple authentication failures detected"
+          description: "Possible credential brute-force or leaked tokens"
+
+      # Alert khi API latency cao bất thường (có thể là DDoS)
+      - alert: HighAPILatency
+        expr: histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m])) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API latency > 5s at P99"
+          description: "Possible DDoS or resource exhaustion"

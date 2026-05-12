@@ -12,7 +12,7 @@ def generate_patients(n=200):
         records.append({
             "patient_id": fake.uuid4(),
             "ho_ten": fake.name(),
-            "cccd": f"{random.randint(0,9)}" + 
+            "cccd": f"{random.randint(1,9)}" +
                     "".join([str(random.randint(0,9)) for _ in range(11)]),
             "ngay_sinh": fake.date_of_birth(minimum_age=18, maximum_age=90)
                               .strftime("%d/%m/%Y"),

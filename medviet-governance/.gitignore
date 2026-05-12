@@ -1,0 +1,19 @@
+# Encryption key — KHÔNG commit lên repo
+.vault_key
+
+# Raw patient data — KHÔNG nộp theo yêu cầu đề bài
+data/raw/patients_raw.csv
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Pytest cache
+.pytest_cache/
+
+# Consent runtime data
+data/consents.json
+
+# Audit log (runtime)
+reports/audit.log

@@ -1,0 +1,62 @@
+﻿python : [main]	INFO	profile include tests: None
+At line:1 char:70
++ ... ignment\medviet-governance"; python -m bandit -r src/ -l 2>&1 | Out-F ...
++                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([main]	INFO	profile include tests: None:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.12.8
+Run started:2026-05-12 08:01:47.338106+00:00
+
+Test results:
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: src/pii\anonymizer.py:14:24
+13	def _fake_cccd() -> str:
+14	    return "".join([str(random.randint(0, 9)) for _ in range(12)])
+15	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: src/pii\anonymizer.py:18:15
+17	def _fake_phone() -> str:
+18	    return f"0{random.choice([3, 5, 7, 8, 9])}" + "".join([str(random.randint(0, 9)) for _ in range(8)])
+19	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: src/pii\anonymizer.py:18:63
+17	def _fake_phone() -> str:
+18	    return f"0{random.choice([3, 5, 7, 8, 9])}" + "".join([str(random.randint(0, 9)) for _ in range(8)])
+19	
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 352
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 3
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 3
+Files skipped (0):
